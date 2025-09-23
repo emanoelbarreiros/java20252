@@ -10,6 +10,7 @@ public class JogoDaVelha {
         int contador = 0;
         Tabuleiro tabuleiro = new Tabuleiro();
         Jogada jogada = null;
+        String estado;
         while(true) {
 
             if (contador % 2 == 0) {
@@ -18,10 +19,26 @@ public class JogoDaVelha {
                 jogada = obterJogada("X");
             }
 
-            tabuleiro.realizarJogada(jogada);
-            tabuleiro.exibirTabuleiro();
+            if (tabuleiro.realizarJogada(jogada)) {
+                tabuleiro.exibirTabuleiro();
+                estado = tabuleiro.checaVencedor();
+                if (estado.equals("X")) {
+                    System.out.println("Vitória do jogador X.");
+                    break;
+                } else if (estado.equals("O")) {
+                    System.out.println("Vitória do jogador O.");
+                    break;
+                } else if (estado.equals("empate")) {
+                    System.out.println("O jogo empatou.");
+                    break;
+                } else if (estado.equals("aberto")) {
+                    contador++;
+                }
 
-            contador++;
+            } else {
+                System.out.println("Jogada inválida. Tente novamente.");
+                tabuleiro.exibirTabuleiro();
+            }
         }
     }
 
